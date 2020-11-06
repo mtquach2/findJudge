@@ -2,15 +2,14 @@ public class Judge{
     public Judge(){};
 
     public int findJudge(int n, int[][] trust){
-        int[] count = new int[n];
+        int[] count = new int[n + 1]; //We do not include 0
         for(int[] i: trust){
-            count[i[0] - 1]--;
-            count[i[1] - 1]++;
+            count[i[0]]--; //if you trust someone you're not the judge
+            count[i[1]]++;  //if you are trusted you could be the judge
         }
-
-        for(int i = 0; i != n; ++i){
-            if(count[i] == n - 1){
-                return i + 1;
+        for(int i = 1; i <= n; i++){
+            if(count[i] == n - 1){  //the judge is trusted by n-1 people
+                return i;
             }
         }
         return -1;
